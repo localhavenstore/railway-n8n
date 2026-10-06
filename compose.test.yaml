@@ -26,11 +26,11 @@ services:
       N8N_OWNER_PASSWORD: owner-test-pw-1234
       RAILWAY_PUBLIC_DOMAIN: n8n-test.example.test
     ports: ["127.0.0.1:5678:5678"]
-    volumes: ["n8ndata:/home/node/.n8n"]
+    # bind mount created by root = like a Railway volume (root-owned) - this caught nothing before r3
+    volumes: ["./n8nvol-rootowned:/home/node/.n8n"]
     depends_on: [pg, redis]
   worker:
     image: n8n-tpl
     command: ["worker"]
     environment: *env
     depends_on: [n8n]
-volumes: {n8ndata: {}}

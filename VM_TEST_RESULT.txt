@@ -13,6 +13,7 @@ No user sessions are running outdated binaries.
 No VM guests are running outdated hypervisor (qemu) binaries on this host.
 29.1.3
 == prereq rc=0
+volume owner before: root 755
  Container tpl-worker-1  Starting
  Container tpl-worker-1  Started
 {"status":"ok"}
@@ -22,8 +23,8 @@ No VM guests are running outdated hypervisor (qemu) binaries on this host.
 == setup-closed rc=0
 {"code":401,"message":"Wrong username or password. Do you have caps lock on?"}  <- wrong-pw HTTP 401
 
-{"data":{"createdAt":"2026-10-06T14:20:49.178Z","id":"ea537cd4-cb66-4d5c-a909-bc234b807fdd","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"userActivated":false},"disabled":false,"mfaEnabled":false,"lastActiveAt":"2026-10-06","isPending":false,"role":"global:owner","signInType":"email","isOwner":true,"featureFlags":{"120_credential_descript
-{"data":{"createdAt":"2026-10-06T14:20:49.178Z","id":"ea537cd4-cb66-4d5c-a909-bc234b807fdd","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"userActivated":false},"disabled":false,"mfaEnabled":false,"lastActiveAt":"2026-10-06","isPending":fals  <- GET /rest/login (who am I)
+{"data":{"createdAt":"2026-10-06T15:23:22.655Z","id":"a1a90ca7-5441-4dc7-be1e-5006c87c42fb","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"userActivated":false},"disabled":false,"mfaEnabled":false,"lastActiveAt":"2026-10-06","isPending":false,"role":"global:owner","signInType":"email","isOwner":true,"featureFlags":{"120_credential_descript
+{"data":{"createdAt":"2026-10-06T15:23:22.655Z","id":"a1a90ca7-5441-4dc7-be1e-5006c87c42fb","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"userActivated":false},"disabled":false,"mfaEnabled":false,"lastActiveAt":"2026-10-06","isPending":fals  <- GET /rest/login (who am I)
 == login rc=0
 Acquiring database migration lock...
 Importing 1 workflows...
@@ -34,12 +35,26 @@ Please restart n8n for changes to take effect if n8n is currently running.
  Container tpl-n8n-1  Started
 webhook: {"pong":"from worker"}
 worker-1  | (Use `node --trace-warnings ...` to show where the warning was created)
-worker-1  | Registered runner "JS Task Runner" (049g4ZWQLbtLho1VBYuC7) 
+worker-1  | Registered runner "JS Task Runner" (Nl8sWJzdCB8Mvldbq1F1L) 
 worker-1  | Worker started execution 1 (job 1)
 worker-1  | Worker finished execution 1 (job 1)
 == queue-webhook rc=0
-{"data":{"createdAt":"2026-10-06T14:20:49.178Z","id":"ea537cd4-cb66-4d5c-a909-bc234b807fdd","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"us
-n8n-process-has-plain-pw=0
-timeout=60 unverified=false binmode=database webhook=
+{"data":{"createdAt":"2026-10-06T15:23:22.655Z","id":"a1a90ca7-5441-4dc7-be1e-5006c87c42fb","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"us
+sh: can't open /proc/1/environ: Permission denied
+CONTROL-LEAK: PLAINPW-CHECK-FAIL uid1000_scanned=3 hits=1 unreadable=0 pid1=denied
+sh: can't open /proc/1/environ: Permission denied
+proc pid=1 uid=0 comm=tini has_pw=unreadable
+proc pid=30 uid=1000 comm=n8n task-runner has_pw=0
+proc pid=7 uid=1000 comm=n8n has_pw=0
+uid1000 reading pid1 env: denied
+PLAINPW-CHECK-OK uid1000_scanned=2 hits=0
+SERVICE  #   UID      PID   PPID  C   STIME  TTY  TIME      CMD
+n8n      1   root     3581  3557  0   15:23  ?    00:00:00  tini -- /home/node/start.sh
+n8n      1   learner  3632  3581  16  15:23  ?    00:00:07  n8n
+n8n      1   learner  3659  3632  2   15:23  ?    00:00:01  n8n task-runner
+SERVICE  #   UID      PID   PPID  C   STIME  TTY  TIME      CMD
+worker   1   root     3065  3041  0   15:23  ?    00:00:00  tini -- /home/node/start.sh worker
+worker   1   learner  3098  3065  11  15:23  ?    00:00:06  n8n worker
+volume owner now: 1000
 == after-restart rc=0
-done 2026-10-06T17:21:13+03:00
+done 2026-10-06T18:24:17+03:00

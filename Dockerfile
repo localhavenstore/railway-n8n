@@ -4,5 +4,6 @@ FROM n8nio/n8n:2.42.3@sha256:240eaa2a3d491adac5817aa4c3f1c521bb18ec79f6e44851715
 COPY --chown=node:node start.sh /home/node/start.sh
 USER root
 RUN chmod 0755 /home/node/start.sh
-USER node
+# starts as root ONLY to fix the owner of the volume (Railway mounts volumes root-owned); start.sh then drops to user node
+# (uid 1000) before n8n starts - n8n never runs as root.
 ENTRYPOINT ["tini", "--", "/home/node/start.sh"]

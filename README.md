@@ -38,6 +38,7 @@ share of your Railway usage. That is how this free template is paid for.
 | `EXECUTIONS_MODE=queue`, `N8N_DEFAULT_BINARY_DATA_MODE=database` | template | binary data in the database so main and worker share it |
 | `N8N_RUNNERS_TASK_TIMEOUT=60`, `N8N_UNVERIFIED_PACKAGES_ENABLED=false` | template | the n8n 3.0 defaults |
 | `N8N_PROXY_HOPS=1`, `N8N_DIAGNOSTICS_ENABLED=false` | template | behind Railway's proxy; no telemetry |
+| `RAILWAY_RUN_UID=0` | template (n8n service) | Railway mounts volumes root-owned: the container starts as root ONLY to give `/home/node/.n8n` to user `node`; `start.sh` then drops to `node` (uid 1000) - n8n itself never runs as root |
 
 ## Updating (and n8n 3.0)
 1. Back up the database (Railway PostgreSQL backups) and note your `N8N_ENCRYPTION_KEY`.
@@ -50,6 +51,8 @@ Guide: https://localhavenstore.github.io/guides/ (n8n on Railway and 3.0) · tes
 ## How it was tested
 A Railway-like stack (the same variables, PostgreSQL 17, Redis with a password, main + worker in queue mode) on a fresh throw-away
 Ubuntu 24.04 VM: health, setup page closed, owner login works (a wrong password does not), a webhook workflow runs through the
-worker, login survives a restart, the plain password is not in the n8n process. Result: `VM_TEST_RESULT.txt`.
+worker, login survives a restart, the plain password is not in the n8n processes (checked as their own user, with a positive
+control), and - since 6 Oct, after our first real Railway deploy found it - the data volume starts root-owned like on Railway and
+n8n, its task runner and the worker still run as uid 1000. Also deployed once on Railway itself (6 Oct). Result: `VM_TEST_RESULT.txt`.
 
 Made with AI assistance and tested by us (Localhaven, https://localhavenstore.github.io). Not affiliated with Railway or n8n GmbH.

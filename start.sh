@@ -3,6 +3,14 @@
 # turned into the bcrypt hash n8n expects; the plain value is removed from the environment before n8n starts.
 # "worker" as first argument starts an n8n queue worker instead of the main process.
 set -eu
+# Railway mounts volumes root-owned (found in the first real Railway deploy, 2026-10-06): as root, give the n8n folder to user
+# node, then re-run this script as node (uid/gid 1000, group 1000 only). Everything below runs unprivileged.
+if [ "$(id -u)" = "0" ]; then
+  mkdir -p /home/node/.n8n
+  [ "$(stat -c %u /home/node/.n8n)" = "1000" ] || chown -R 1000:1000 /home/node/.n8n
+  # BusyBox in this image: setpriv cannot change the uid -> su (root needs no password; -p keeps the Railway variables)
+  exec su -p -s /bin/sh node -c 'exec env HOME=/home/node /home/node/start.sh "$@"' start.sh "$@"
+fi
 if [ "${1:-}" != "worker" ] && [ -n "${N8N_OWNER_PASSWORD:-}" ] && [ -n "${N8N_OWNER_EMAIL:-}" ]; then
   [ "${#N8N_OWNER_PASSWORD}" -ge 12 ] || { echo "N8N_OWNER_PASSWORD must be at least 12 characters"; exit 1; }
   N8N_INSTANCE_OWNER_PASSWORD_HASH=$(node -e '
