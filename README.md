@@ -3,9 +3,9 @@
 One-click n8n in **queue mode** (main + worker + PostgreSQL + Redis), pinned to a release we tested, with the n8n 3.0 defaults
 already set - so the n8n 3.0 release does not land on you by surprise.
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/n8n-queue-mode-pinned-tested-30-ready?referralCode=j8As-k)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/n8n-queue-mode-pinned-tested-30-ready-2e76907a-a71b-41a9-887a-5d2c11004b03?referralCode=j8As-k)
 
-**Deploy on Railway:** https://railway.com/deploy/n8n-queue-mode-pinned-tested-30-ready (the button and this link carry our referral code -
+**Deploy on Railway:** https://railway.com/deploy/n8n-queue-mode-pinned-tested-30-ready-2e76907a-a71b-41a9-887a-5d2c11004b03 (the button and this link carry our referral code -
 see the next line).
 New to Railway? Sign up with our **referral link**: https://railway.com?referralCode=j8As-k - you get USD 20 of credit, and we get a
 share of your Railway usage. That is how this free template is paid for.
