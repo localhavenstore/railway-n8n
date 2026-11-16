@@ -4,7 +4,8 @@ Ubuntu 24.04.5 LTS
 
 Running kernel seems to be up-to-date.
 
-No services need to be restarted.
+Restarting services...
+ systemctl restart packagekit.service
 
 No containers need to be restarted.
 
@@ -17,29 +18,31 @@ volume owner before: root 755
  Container tpl-worker-1  Starting
  Container tpl-worker-1  Started
 {"status":"ok"}
-2.42.3
+2.47.7
 == up rc=0
 {"setup":false,"ver":null}
 == setup-closed rc=0
 {"code":401,"message":"Wrong username or password. Do you have caps lock on?"}  <- wrong-pw HTTP 401
 
-{"data":{"createdAt":"2026-10-06T15:23:22.655Z","id":"a1a90ca7-5441-4dc7-be1e-5006c87c42fb","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"userActivated":false},"disabled":false,"mfaEnabled":false,"lastActiveAt":"2026-10-06","isPending":false,"role":"global:owner","signInType":"email","isOwner":true,"featureFlags":{"120_credential_descript
-{"data":{"createdAt":"2026-10-06T15:23:22.655Z","id":"a1a90ca7-5441-4dc7-be1e-5006c87c42fb","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"userActivated":false},"disabled":false,"mfaEnabled":false,"lastActiveAt":"2026-10-06","isPending":fals  <- GET /rest/login (who am I)
+{"data":{"kind":"person","createdAt":"2026-11-14T22:51:17.877Z","id":"b9dc2dd4-a5eb-4668-8c6e-b84cad2a576b","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"userActivated":false},"disabled":false,"mfaEnabled":false,"lastActiveAt":"2026-11-14","isPending":false,"role":"global:owner","signInType":"email","isOwner":true,"featureFlags":{"120_cre
+{"data":{"kind":"person","createdAt":"2026-11-14T22:51:17.877Z","id":"b9dc2dd4-a5eb-4668-8c6e-b84cad2a576b","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"userActivated":false},"disabled":false,"mfaEnabled":false,"lastActiveAt":"2026-11-14",  <- GET /rest/login (who am I)
 == login rc=0
 Acquiring database migration lock...
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
 Importing 1 workflows...
 Deactivating workflow "hook".
 Successfully imported 1 workflow.
-Please restart n8n for changes to take effect if n8n is currently running.
+A running n8n applies this change shortly. If n8n is stopped, it applies the change when it starts.
  Container tpl-n8n-1  Restarting
  Container tpl-n8n-1  Started
 webhook: {"pong":"from worker"}
-worker-1  | (Use `node --trace-warnings ...` to show where the warning was created)
-worker-1  | Registered runner "JS Task Runner" (Nl8sWJzdCB8Mvldbq1F1L) 
+worker-1  | 
+worker-1  | Registered runner "JS Task Runner" (aECQfxDqPVU1_nveDb8Lr) 
 worker-1  | Worker started execution 1 (job 1)
 worker-1  | Worker finished execution 1 (job 1)
 == queue-webhook rc=0
-{"data":{"createdAt":"2026-10-06T15:23:22.655Z","id":"a1a90ca7-5441-4dc7-be1e-5006c87c42fb","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null,"settings":{"us
+{"data":{"kind":"person","createdAt":"2026-11-14T22:51:17.877Z","id":"b9dc2dd4-a5eb-4668-8c6e-b84cad2a576b","email":"owner@example.test","firstName":"Owner","lastName":"","personalizationAnswers":null
 sh: can't open /proc/1/environ: Permission denied
 CONTROL-LEAK: PLAINPW-CHECK-FAIL uid1000_scanned=3 hits=1 unreadable=0 pid1=denied
 sh: can't open /proc/1/environ: Permission denied
@@ -49,12 +52,12 @@ proc pid=7 uid=1000 comm=n8n has_pw=0
 uid1000 reading pid1 env: denied
 PLAINPW-CHECK-OK uid1000_scanned=2 hits=0
 SERVICE  #   UID      PID   PPID  C   STIME  TTY  TIME      CMD
-n8n      1   root     3581  3557  0   15:23  ?    00:00:00  tini -- /home/node/start.sh
-n8n      1   learner  3632  3581  16  15:23  ?    00:00:07  n8n
-n8n      1   learner  3659  3632  2   15:23  ?    00:00:01  n8n task-runner
+n8n      1   root     3626  3603  0   22:51  ?    00:00:00  tini -- /home/node/start.sh
+n8n      1   learner  3676  3626  18  22:51  ?    00:00:07  n8n
+n8n      1   learner  3705  3676  3   22:51  ?    00:00:01  n8n task-runner
 SERVICE  #   UID      PID   PPID  C   STIME  TTY  TIME      CMD
-worker   1   root     3065  3041  0   15:23  ?    00:00:00  tini -- /home/node/start.sh worker
-worker   1   learner  3098  3065  11  15:23  ?    00:00:06  n8n worker
+worker   1   root     3106  3082  0   22:51  ?    00:00:00  tini -- /home/node/start.sh worker
+worker   1   learner  3140  3106  12  22:51  ?    00:00:07  n8n worker
 volume owner now: 1000
 == after-restart rc=0
-done 2026-10-06T18:24:17+03:00
+done 2026-11-15T00:52:15+02:00

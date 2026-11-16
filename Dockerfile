@@ -1,6 +1,6 @@
-# Railway template: n8n, pinned to a tested release (2.42.3, by digest), 3.0-ready defaults, owner created from variables (no open
+# Railway template: n8n, pinned to a tested release (2.47.7, by digest), 3.0-ready defaults, owner created from variables (no open
 # setup page on a public URL). The image is the official n8nio/n8n; this layer only adds start.sh.
-FROM n8nio/n8n:2.42.3@sha256:240eaa2a3d491adac5817aa4c3f1c521bb18ec79f6e448517158d5220ee0f37b
+FROM n8nio/n8n:2.47.7@sha256:b4b90747b81fcda7e76550c0d3aa7f0f64917a1e9573cff40d6834eaf2e0f8ea
 COPY --chown=node:node start.sh /home/node/start.sh
 USER root
 RUN chmod 0755 /home/node/start.sh

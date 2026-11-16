@@ -1,4 +1,5 @@
 #!/bin/sh
+# CONTAINER-ENTRYPOINT (root): the Dockerfile's ENTRYPOINT - Docker starts it as root inside the n8n container; it drops to user node below.
 # Owner from variables (n8n's own N8N_INSTANCE_OWNER_* feature, see n8n docs): the plain N8N_OWNER_PASSWORD set by the template is
 # turned into the bcrypt hash n8n expects; the plain value is removed from the environment before n8n starts.
 # "worker" as first argument starts an n8n queue worker instead of the main process.

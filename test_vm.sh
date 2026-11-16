@@ -5,7 +5,8 @@ VM=${TESTVM:?set TESTVM to your throwaway-VM helper script}; H=$(cd "$(dirname "
 s() { "$VM" ssh "$1" >> "$OUT" 2>&1; echo "== $2 rc=$?" | tee -a "$OUT"; }
 trap '"$VM" down >/dev/null 2>&1' EXIT
 "$VM" up >> "$OUT" 2>&1 || { echo "VM up failed" | tee -a "$OUT"; exit 1; }
-tar -C "$H" -czf /tmp/n8n-tpl-$$.tgz Dockerfile start.sh compose.test.yaml && "$VM" put /tmp/n8n-tpl-$$.tgz /home/learner/tpl.tgz; rm -f /tmp/n8n-tpl-$$.tgz
+tar -C "$H" -czf /tmp/n8n-tpl-$$.tgz Dockerfile start.sh compose.test.yaml && "$VM" put /tmp/n8n-tpl-$$.tgz /home/learner/tpl.tgz; rc=$?; rm -f /tmp/n8n-tpl-$$.tgz
+[ "$rc" -eq 0 ] || { echo "copy to the VM failed (rc=$rc) - test stopped" | tee -a "$OUT"; exit 1; }
 U='curl -s -c /tmp/cj -b /tmp/cj'
 s "sudo apt-get update -qq && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker.io docker-compose-v2 docker-buildx curl jq >/dev/null && mkdir -p tpl && tar -xzf tpl.tgz -C tpl && sudo docker version --format '{{.Server.Version}}'" prereq
 s "cd tpl && sudo install -d -o root -g root -m 0755 n8nvol-rootowned && stat -c 'volume owner before: %U %a' n8nvol-rootowned && sudo docker compose -f compose.test.yaml build -q && sudo docker compose -f compose.test.yaml up -d 2>&1 | tail -2; for i in \$(seq 1 90); do curl -fs http://127.0.0.1:5678/healthz >/dev/null && break; sleep 3; done; curl -s http://127.0.0.1:5678/healthz; echo; sudo docker compose -f compose.test.yaml exec -T n8n n8n --version" up
